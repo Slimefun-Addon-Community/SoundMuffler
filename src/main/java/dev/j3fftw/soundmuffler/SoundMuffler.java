@@ -1,4 +1,4 @@
-package me.panda.soundmuffler;
+package dev.j3fftw.soundmuffler;
 
 import me.mrCookieSlime.Slimefun.Objects.Research;
 import me.mrCookieSlime.Slimefun.api.Slimefun;

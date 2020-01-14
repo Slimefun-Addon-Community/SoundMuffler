@@ -1,4 +1,4 @@
-package me.panda.soundmuffler;
+package dev.j3fftw.soundmuffler;
 
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.Categories;
