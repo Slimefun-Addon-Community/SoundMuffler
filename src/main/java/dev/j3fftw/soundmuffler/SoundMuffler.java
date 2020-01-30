@@ -14,6 +14,6 @@ public class SoundMuffler extends JavaPlugin {
         soundMufflerMachine.registerChargeableBlock(64);
 
         Slimefun.registerResearch(new Research(6912, "Sound Muffler", 11),
-                soundMufflerMachine.getItem());
+            soundMufflerMachine.getItem());
     }
 }

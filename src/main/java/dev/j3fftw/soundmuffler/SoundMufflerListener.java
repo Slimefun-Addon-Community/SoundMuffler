@@ -17,15 +17,14 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
 
     public SoundMufflerListener(Plugin plugin) {
         super(plugin, ListenerPriority.NORMAL,
-                PacketType.Play.Server.NAMED_SOUND_EFFECT, PacketType.Play.Server.ENTITY_SOUND
+            PacketType.Play.Server.NAMED_SOUND_EFFECT, PacketType.Play.Server.ENTITY_SOUND
         );
     }
 
     @Override
     public void onPacketSending(PacketEvent event) {
         if (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT
-                || event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND
-                || event.getPacketType() == PacketType.Play.Server.
+            || event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND
         ) {
             int x = event.getPacket().getIntegers().read(0) >> 3;
             int y = event.getPacket().getIntegers().read(1) >> 3;
@@ -33,9 +32,9 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
             Location loc = new Location(event.getPlayer().getWorld(), x, y, z);
             final Block soundMuff = findSoundMuffler(loc);
             if (soundMuff != null
-                    && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
-                    && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled").equals("true")
-                    && Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "energy-charge")) >= 8
+                && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
+                && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled").equals("true")
+                && Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "energy-charge")) >= 8
             ) {
 
                 int volume = Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "volume"));

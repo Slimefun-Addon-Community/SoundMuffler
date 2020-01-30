@@ -31,16 +31,16 @@ public class SoundMufflerMachine extends SlimefunItem {
 
     public SoundMufflerMachine() {
         super(Categories.ELECTRICITY,
-                new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
-                        "", "&7Muffles all sound in a", "&78 block radius"
-                ),
-                id,
-                RecipeType.ENHANCED_CRAFTING_TABLE,
-                new ItemStack[]{
-                        new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
-                        SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
-                        new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
-                }
+            new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
+                "", "&7Muffles all sound in a", "&78 block radius"
+            ),
+            id,
+            RecipeType.ENHANCED_CRAFTING_TABLE,
+            new ItemStack[] {
+                new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
+                SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
+                new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
+            }
         );
 
         new BlockMenuPreset(id, name) {
@@ -64,13 +64,13 @@ public class SoundMufflerMachine extends SlimefunItem {
                 }
 
                 menu.replaceExistingItem(8, new CustomItem((enabled ? Material.REDSTONE : Material.GUNPOWDER),
-                        "&7Enabled: " + (enabled ? "&a\u2714" : "&4\u2718"), "", "&e> Click to enable this Machine"));
+                    "&7Enabled: " + (enabled ? "&a\u2714" : "&4\u2718"), "", "&e> Click to enable this Machine"));
                 menu.replaceExistingItem(0, new CustomItem(Material.PAPER,
-                        "&eVolume: &b" + volume,
-                        "&7Valid value range: 0-100",
-                        "&7L-click: -10",
-                        "&7R-click: +10",
-                        "&7With shift held: +/-1"));
+                    "&eVolume: &b" + volume,
+                    "&7Valid value range: 0-100",
+                    "&7L-click: -10",
+                    "&7R-click: +10",
+                    "&7With shift held: +/-1"));
 
                 final int finalVolume = volume;
                 menu.addMenuClickHandler(0, (p, arg1, arg2, arg3) -> {
@@ -106,8 +106,8 @@ public class SoundMufflerMachine extends SlimefunItem {
             @Override
             public boolean canOpen(Block b, Player p) {
                 return p.hasPermission("slimefun.inventory.bypass")
-                        || SlimefunPlugin.getProtectionManager()
-                        .hasPermission(p, b, ProtectableAction.ACCESS_INVENTORIES);
+                    || SlimefunPlugin.getProtectionManager()
+                    .hasPermission(p, b, ProtectableAction.ACCESS_INVENTORIES);
             }
 
             @Override
@@ -135,7 +135,7 @@ public class SoundMufflerMachine extends SlimefunItem {
     protected void constructMenu(BlockMenuPreset preset) {
         for (int i : border) {
             preset.addItem(i, new CustomItem(Material.GRAY_STAINED_GLASS_PANE, " "),
-                    (player, i1, itemStack, clickAction) -> false);
+                (player, i1, itemStack, clickAction) -> false);
         }
     }
 
