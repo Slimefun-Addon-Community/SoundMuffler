@@ -3,4 +3,4 @@ description: Muffles nearby sound
 version: 1.0
 api-version: 1.14
 depend: [Slimefun, ProtocolLib]
-main: me.panda.soundmuffler.SoundMuffler
+main: dev.j3fftw.soundmuffler.SoundMuffler
