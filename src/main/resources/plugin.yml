@@ -1,6 +1,6 @@
 name: SoundMuffler
 description: Muffles nearby sound
-version: 1.0
+version: ${project.version}
 api-version: 1.14
 depend: [Slimefun, ProtocolLib]
 main: dev.j3fftw.soundmuffler.SoundMuffler
