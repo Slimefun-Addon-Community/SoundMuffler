@@ -10,6 +10,7 @@ import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
@@ -26,10 +27,22 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
         if (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT
             || event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND
         ) {
-            int x = event.getPacket().getIntegers().read(0) >> 3;
-            int y = event.getPacket().getIntegers().read(1) >> 3;
-            int z = event.getPacket().getIntegers().read(2) >> 3;
-            Location loc = new Location(event.getPlayer().getWorld(), x, y, z);
+            Location loc;
+            if (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT){
+                int x = event.getPacket().getIntegers().read(0) >> 3;
+                int y = event.getPacket().getIntegers().read(1) >> 3;
+                int z = event.getPacket().getIntegers().read(2) >> 3;
+                loc = new Location(event.getPlayer().getWorld(), x, y, z);
+            } else if (event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND) {
+                loc = event.getPlayer().getWorld().getEntities().stream()
+                    .filter(e -> e.getEntityId() == event.getPacket().getIntegers().read(0))
+                    .map(Entity::getLocation)
+                    .findAny().orElse(null);
+            } else return;
+
+            if (loc == null)
+                return;
+
             final Block soundMuff = findSoundMuffler(loc);
             if (soundMuff != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
