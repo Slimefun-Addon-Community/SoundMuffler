@@ -7,11 +7,11 @@ By using a SoundMuffler you are able to reduce the sound or even stop the sounds
 
 
 ## Download SoundMuffler
-You can download SlimyTreeTaps right here: [Development Builds](https://thebusybiscuit.github.io/builds/J3fftw1/SlimeXpansion/master/)
+You can download SoundMuffler right here: [Development Builds](https://thebusybiscuit.github.io/builds/J3fftw1/SoundMuffler/master/)
 
 <p align="center">
-  <a href="https://thebusybiscuit.github.io/builds/J3fftw1/SlimeXpansion/master/">
-    <img src="https://thebusybiscuit.github.io/builds/J3fftw1/SlimeXpansion/master/badge.svg" alt="Build Server"/>
+  <a href="https://thebusybiscuit.github.io/builds/J3fftw1/SoundMuffler/master/">
+    <img src="https://thebusybiscuit.github.io/builds/J3fftw1/SoundMuffler/master/badge.svg" alt="Build Server"/>
   </a>
 </p>
 
@@ -25,4 +25,4 @@ Click the badge down below to join the server for suggestions/questions or other
 </p>
 
 ## Open Source
-This Project is open-source and licensed under the [MIT License](https://github.com/TheBusyBiscuit/SlimyTreeTaps/blob/master/LICENSE)
+This Project is open-source and licensed under the [MIT License](https://thebusybiscuit.github.io/builds/J3fftw1/SoundMuffler/master/LICENSE)
