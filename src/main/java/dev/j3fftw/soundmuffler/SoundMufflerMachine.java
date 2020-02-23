@@ -30,7 +30,7 @@ public class SoundMufflerMachine extends SlimefunItem {
     private static final String id = "SOUND_MUFFLER";
 
     public SoundMufflerMachine() {
-        super(Categories.ELECTRICITY,
+        super(SoundMuffler.SOUND_MUFFLER,
             new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
                 "", "&7Muffles all sound in a", "&78 block radius"
             ),
