@@ -32,7 +32,7 @@ public class SoundMufflerMachine extends SlimefunItem {
     public SoundMufflerMachine() {
         super(SoundMuffler.SOUND_MUFFLER,
             new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
-                "", "&7Muffles all sound in a", "&78 block radius", "", "&e\u26A1 Requires Power to use"
+                "", "&7Muffles all sound in a", "&78 block radius", "", "&e\u26A1 Requires power to use"
             ),
             id,
             RecipeType.ENHANCED_CRAFTING_TABLE,
