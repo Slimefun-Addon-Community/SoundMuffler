@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
+import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,7 +48,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
             if (soundMuff != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled").equals("true")
-                && Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "energy-charge")) >= 8
+                && ChargableBlock.getCharge(soundMuff) > 8
             ) {
 
                 int volume = Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "volume"));

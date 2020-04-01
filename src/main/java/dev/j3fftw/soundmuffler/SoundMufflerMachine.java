@@ -1,7 +1,8 @@
 package dev.j3fftw.soundmuffler;
 
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Lists.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
@@ -22,7 +23,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class SoundMufflerMachine extends SlimefunItem {
+public class SoundMufflerMachine extends SlimefunItem implements EnergyNetComponent {
 
     public static final int DISTANCE = 8;
     private static final int[] border = {1, 2, 3, 4, 5, 6, 7};
@@ -36,7 +37,7 @@ public class SoundMufflerMachine extends SlimefunItem {
             ),
             id,
             RecipeType.ENHANCED_CRAFTING_TABLE,
-            new ItemStack[] {
+            new ItemStack[]{
                 new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
                 SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
                 new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
@@ -139,12 +140,22 @@ public class SoundMufflerMachine extends SlimefunItem {
         }
     }
 
+    @Override
+    public EnergyNetComponentType getEnergyComponentType() {
+        return EnergyNetComponentType.CONSUMER;
+    }
+
     public int getEnergyConsumption() {
         return 8;
     }
 
     @Override
-    public void register(boolean slimefun) {
+    public int getCapacity() {
+        return 352;
+    }
+
+    @Override
+    public void preRegister() {
         addItemHandler(new BlockTicker() {
 
             @Override
@@ -166,10 +177,12 @@ public class SoundMufflerMachine extends SlimefunItem {
             }
         });
 
-        super.register(slimefun);
     }
 
     private void tick(Block b) {
-        ChargableBlock.addCharge(b, -getEnergyConsumption());
+        if ((BlockStorage.getLocationInfo(b.getLocation(), "enabled").equals("true")) && (ChargableBlock.getCharge(b) > 8)) {
+            ChargableBlock.addCharge(b, -getEnergyConsumption());
+        }
     }
 }
+
