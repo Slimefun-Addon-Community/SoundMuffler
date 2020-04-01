@@ -1,7 +1,8 @@
 package dev.j3fftw.soundmuffler;
 
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
-import me.mrCookieSlime.Slimefun.Lists.Categories;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
 import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
@@ -22,7 +23,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class SoundMufflerMachine extends SlimefunItem {
+public class SoundMufflerMachine extends SlimefunItem implements EnergyNetComponent {
 
     public static final int DISTANCE = 8;
     private static final int[] border = {1, 2, 3, 4, 5, 6, 7};
@@ -31,16 +32,16 @@ public class SoundMufflerMachine extends SlimefunItem {
 
     public SoundMufflerMachine() {
         super(SoundMuffler.SOUND_MUFFLER,
-            new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
-                "", "&7Muffles all sound in a", "&78 block radius", "", "&e\u26A1 Requires power to use"
-            ),
-            id,
-            RecipeType.ENHANCED_CRAFTING_TABLE,
-            new ItemStack[] {
-                new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
-                SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
-                new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
-            }
+                new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
+                        "", "&7Muffles all sound in a", "&78 block radius", "", "&e\u26A1 Requires power to use"
+                ),
+                id,
+                RecipeType.ENHANCED_CRAFTING_TABLE,
+                new ItemStack[]{
+                        new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
+                        SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
+                        new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
+                }
         );
 
         new BlockMenuPreset(id, name) {
@@ -64,13 +65,13 @@ public class SoundMufflerMachine extends SlimefunItem {
                 }
 
                 menu.replaceExistingItem(8, new CustomItem((enabled ? Material.REDSTONE : Material.GUNPOWDER),
-                    "&7Enabled: " + (enabled ? "&a\u2714" : "&4\u2718"), "", "&e> Click to enable this Machine"));
+                        "&7Enabled: " + (enabled ? "&a\u2714" : "&4\u2718"), "", "&e> Click to enable this Machine"));
                 menu.replaceExistingItem(0, new CustomItem(Material.PAPER,
-                    "&eVolume: &b" + volume,
-                    "&7Valid value range: 0-100",
-                    "&7L-click: -10",
-                    "&7R-click: +10",
-                    "&7With shift held: +/-1"));
+                        "&eVolume: &b" + volume,
+                        "&7Valid value range: 0-100",
+                        "&7L-click: -10",
+                        "&7R-click: +10",
+                        "&7With shift held: +/-1"));
 
                 final int finalVolume = volume;
                 menu.addMenuClickHandler(0, (p, arg1, arg2, arg3) -> {
@@ -106,8 +107,8 @@ public class SoundMufflerMachine extends SlimefunItem {
             @Override
             public boolean canOpen(Block b, Player p) {
                 return p.hasPermission("slimefun.inventory.bypass")
-                    || SlimefunPlugin.getProtectionManager()
-                    .hasPermission(p, b, ProtectableAction.ACCESS_INVENTORIES);
+                        || SlimefunPlugin.getProtectionManager()
+                        .hasPermission(p, b, ProtectableAction.ACCESS_INVENTORIES);
             }
 
             @Override
@@ -135,8 +136,13 @@ public class SoundMufflerMachine extends SlimefunItem {
     protected void constructMenu(BlockMenuPreset preset) {
         for (int i : border) {
             preset.addItem(i, new CustomItem(Material.GRAY_STAINED_GLASS_PANE, " "),
-                (player, i1, itemStack, clickAction) -> false);
+                    (player, i1, itemStack, clickAction) -> false);
         }
+    }
+
+    @Override
+    public EnergyNetComponentType getEnergyComponentType() {
+        return EnergyNetComponentType.CONSUMER;
     }
 
     public int getEnergyConsumption() {
@@ -144,7 +150,12 @@ public class SoundMufflerMachine extends SlimefunItem {
     }
 
     @Override
-    public void register(boolean slimefun) {
+    public int getCapacity() {
+        return 352;
+    }
+
+    @Override
+    public void preRegister() {
         addItemHandler(new BlockTicker() {
 
             @Override
@@ -166,10 +177,12 @@ public class SoundMufflerMachine extends SlimefunItem {
             }
         });
 
-        super.register(slimefun);
     }
 
     private void tick(Block b) {
-        ChargableBlock.addCharge(b, -getEnergyConsumption());
+        if ((BlockStorage.getLocationInfo(b.getLocation(), "enabled").equals("true")) && (ChargableBlock.getCharge(b) > 8)) {
+            ChargableBlock.addCharge(b, -getEnergyConsumption());
+        }
     }
 }
+
