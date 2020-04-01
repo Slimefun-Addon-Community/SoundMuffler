@@ -17,11 +17,11 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io/</url>
         </repository>
-        <repository>
-            <id>dmulloy2-repo</id>
-            <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
-        </repository>
-    </repositories>
+            <repository>
+                <id>dmulloy2-repo</id>
+                <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
+            </repository>
+        </repositories>
 
     <dependencies>
         <dependency>
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.github.TheBusyBiscuit</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>73401bae08f527874f5e5ea9185fa541cdbb3de6</version>
+            <version>73401bae08</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -53,7 +53,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
+            <groupId>com.github.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
             <scope>provided</scope>

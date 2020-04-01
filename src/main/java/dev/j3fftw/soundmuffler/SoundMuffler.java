@@ -16,7 +16,7 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
     @Override
     public void onEnable() {
         SOUND_MUFFLER = new Category(new NamespacedKey(this, "sound_muffler"),
-                new CustomItem(Material.BEACON, "&7SoundMuffler", "", "&a> Click to open"));
+            new CustomItem(Material.BEACON, "&7SoundMuffler", "", "&a> Click to open"));
 
         new SoundMufflerListener(this).start();
 
@@ -24,7 +24,7 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
         soundMufflerMachine.register(this);
 
         Slimefun.registerResearch(new Research(new NamespacedKey(this, "sound_muffler"), 6912, "Sound Muffler", 11),
-                soundMufflerMachine.getItem());
+            soundMufflerMachine.getItem());
     }
 
 
