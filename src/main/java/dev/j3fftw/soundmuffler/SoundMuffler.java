@@ -27,6 +27,7 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
         soundMufflerMachine.register(this);
 
         Research research = new Research(new NamespacedKey(this, "sound_muffler"), 6912, "Sound Muffler", 11);
+        
         research.addItems(soundMufflerMachine.getItem());
         research.register();
     }
