@@ -1,9 +1,8 @@
 package dev.j3fftw.soundmuffler;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun4.core.researching.Research;
 import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.Objects.Research;
-import me.mrCookieSlime.Slimefun.api.Slimefun;
 import me.mrCookieSlime.Slimefun.bstats.bukkit.Metrics;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import org.bukkit.Material;
@@ -27,8 +26,10 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
         SoundMufflerMachine soundMufflerMachine = new SoundMufflerMachine();
         soundMufflerMachine.register(this);
 
-        Slimefun.registerResearch(new Research(new NamespacedKey(this, "sound_muffler"), 6912, "Sound Muffler", 11),
-            soundMufflerMachine.getItem());
+        new Research(new NamespacedKey(this, "sound_muffler"),
+                     6912, "Sound Muffler", 11)
+        .addItems(soundMufflerMachine.getItem())
+        .register();
     }
 
 
