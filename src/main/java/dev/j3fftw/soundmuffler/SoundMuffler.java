@@ -15,8 +15,14 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onEnable() {
+        if (!new File(getDataFolder(), "config.yml").exists())
+            saveDefaultConfig();
 
-        new Metrics(this, 7415); 
+        new Metrics(this, 7415);
+
+        if (getConfig().getBoolean("options.auto-update") && getDescription().getVersion().startsWith("DEV - ")) {
+            new GitHubBuildsUpdater(this, getFile(), "J3fftw1/SoundMuffler/master").start();
+        }
 
         SOUND_MUFFLER = new Category(new NamespacedKey(this, "sound_muffler"),
             new CustomItem(Material.BEACON, "&7SoundMuffler", "", "&a> Click to open"));
