@@ -5,9 +5,10 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
-import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-public class SoundMufflerListener extends PacketAdapter implements Listener {
+public class SoundMufflerListener extends PacketAdapter implements Listener, EnergyNetComponent {
 
     public SoundMufflerListener(Plugin plugin) {
         super(plugin, ListenerPriority.NORMAL,
@@ -29,7 +30,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
             || event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND
         ) {
             Location loc;
-            if (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT){
+            if (event.getPacketType() == PacketType.Play.Server.NAMED_SOUND_EFFECT) {
                 int x = event.getPacket().getIntegers().read(0) >> 3;
                 int y = event.getPacket().getIntegers().read(1) >> 3;
                 int z = event.getPacket().getIntegers().read(2) >> 3;
@@ -48,7 +49,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
             if (soundMuff != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled").equals("true")
-                && ChargableBlock.getCharge(soundMuff) > 8
+                && getCharge(loc) > 8
             ) {
 
                 int volume = Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "volume"));
@@ -83,5 +84,15 @@ public class SoundMufflerListener extends PacketAdapter implements Listener {
 
     public void start() {
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
+    }
+
+    @Override
+    public EnergyNetComponentType getEnergyComponentType() {
+        return EnergyNetComponentType.CONSUMER;
+    }
+
+    @Override
+    public int getCapacity() {
+        return 352;
     }
 }

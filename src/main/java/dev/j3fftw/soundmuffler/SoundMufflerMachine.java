@@ -1,18 +1,17 @@
 package dev.j3fftw.soundmuffler;
 
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunPlugin;
 import me.mrCookieSlime.CSCoreLibPlugin.Configuration.Config;
 import me.mrCookieSlime.Slimefun.Lists.RecipeType;
-import me.mrCookieSlime.Slimefun.Lists.SlimefunItems;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunBlockHandler;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.SlimefunItem;
-import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.UnregisterReason;
 import me.mrCookieSlime.Slimefun.Objects.handlers.BlockTicker;
-import me.mrCookieSlime.Slimefun.SlimefunPlugin;
+import me.mrCookieSlime.Slimefun.Objects.handlers.ItemHandler;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import me.mrCookieSlime.Slimefun.api.SlimefunItemStack;
-import me.mrCookieSlime.Slimefun.api.energy.ChargableBlock;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
 import me.mrCookieSlime.Slimefun.api.inventory.BlockMenuPreset;
 import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
@@ -21,6 +20,7 @@ import me.mrCookieSlime.Slimefun.cscorelib2.protection.ProtectableAction;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class SoundMufflerMachine extends SlimefunItem implements EnergyNetComponent {
@@ -37,12 +37,14 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
             ),
             id,
             RecipeType.ENHANCED_CRAFTING_TABLE,
-            new ItemStack[]{
+            new ItemStack[] {
                 new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
                 SlimefunItems.STEEL_PLATE, SlimefunItems.ELECTRIC_MOTOR, SlimefunItems.STEEL_PLATE,
                 new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL)
             }
+
         );
+        addItemHandler(onPlace());
 
         new BlockMenuPreset(id, name) {
 
@@ -117,19 +119,10 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
             }
         };
 
-        registerBlockHandler(id, new SlimefunBlockHandler() {
 
-            @Override
-            public void onPlace(Player p, Block b, SlimefunItem item) {
-                BlockStorage.addBlockInfo(b, "enabled", "false");
-                BlockStorage.addBlockInfo(b, "volume", "10");
-            }
-
-            @Override
-            public boolean onBreak(Player p, Block b, SlimefunItem item, UnregisterReason reason) {
-                BlockStorage.clearBlockInfo(b);
-                return true;
-            }
+        registerBlockHandler(id, (p, b, item, reason) -> {
+            BlockStorage.clearBlockInfo(b);
+            return true;
         });
     }
 
@@ -138,6 +131,17 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
             preset.addItem(i, new CustomItem(Material.GRAY_STAINED_GLASS_PANE, " "),
                 (player, i1, itemStack, clickAction) -> false);
         }
+    }
+
+
+    private ItemHandler onPlace() {
+        return new BlockPlaceHandler(false) {
+            @Override
+            public void onPlayerPlace(BlockPlaceEvent e) {
+                BlockStorage.addBlockInfo(e.getBlock(), "enabled", "false");
+                BlockStorage.addBlockInfo(e.getBlock(), "volume", "10");
+            }
+        };
     }
 
     @Override
@@ -180,8 +184,9 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
     }
 
     private void tick(Block b) {
-        if ((BlockStorage.getLocationInfo(b.getLocation(), "enabled").equals("true")) && (ChargableBlock.getCharge(b) > 8)) {
-            ChargableBlock.addCharge(b, -getEnergyConsumption());
+        if ((BlockStorage.getLocationInfo(b.getLocation(), "enabled").equals("true"))
+            && (getCharge(b.getLocation()) > 8)) {
+            removeCharge(b.getLocation(), getEnergyConsumption());
         }
     }
 }
