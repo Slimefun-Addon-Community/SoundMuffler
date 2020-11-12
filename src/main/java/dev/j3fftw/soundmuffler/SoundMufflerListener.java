@@ -72,7 +72,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
                     Block b = loc.getWorld().getBlockAt(x, y, z);
                     if (b.getType() == Material.WHITE_CONCRETE && BlockStorage.hasBlockInfo(b)) {
                         SlimefunItem item = BlockStorage.check(b);
-                        if (item.getID().equals("SOUND_MUFFLER")) {
+                        if (item.getId().equals("SOUND_MUFFLER")) {
                             return b;
                         }
                     }
