@@ -21,6 +21,10 @@
                       <id>dmulloy2-repo</id>
                       <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
               </repository>
+        <repository>
+            <id>bstats-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
+        </repository>
       </repositories>
 
     <dependencies>
@@ -57,6 +61,12 @@
             <artifactId>ProtocolLib</artifactId>
             <version>7bac4ec634</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -95,6 +105,15 @@
                         </goals>
                     </execution>
                 </executions>
+
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats.bukkit</pattern>
+                            <shadedPattern>dev.j3fftw.soundmuffler.bstats</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
             </plugin>
         </plugins>
     </build>
