@@ -37,7 +37,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
                 loc = new Location(event.getPlayer().getWorld(), x, y, z);
             } else if (event.getPacketType() == PacketType.Play.Server.ENTITY_SOUND) {
                 loc = event.getPlayer().getWorld().getEntities().stream()
-                    .filter(e -> e.getEntityId() == event.getPacket().getIntegers().read(0))
+                    .filter(e -> e.getEntityId() == event.getPacket().getIntegers().read(1))
                     .map(Entity::getLocation)
                     .findAny().orElse(null);
             } else return;
@@ -49,9 +49,8 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
             if (soundMuff != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled") != null
                 && BlockStorage.getLocationInfo(soundMuff.getLocation(), "enabled").equals("true")
-                && getCharge(loc) > 8
+                && getCharge(soundMuff.getLocation()) > 8
             ) {
-
                 int volume = Integer.parseInt(BlockStorage.getLocationInfo(soundMuff.getLocation(), "volume"));
                 if (volume == 0) {
                     event.setCancelled(true);
@@ -94,5 +93,10 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
     @Override
     public int getCapacity() {
         return 352;
+    }
+
+    @Override
+    public String getId() {
+        return "SOUND_MUFFLER";
     }
 }

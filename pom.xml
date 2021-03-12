@@ -37,7 +37,7 @@
         <dependency>
             <groupId>com.github.TheBusyBiscuit</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-18</version>
+            <version>RC-20</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -51,15 +51,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.TheBusyBiscuit</groupId>
-            <artifactId>CS-CoreLib</artifactId>
-            <version>8081bb4fe4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>7bac4ec634</version>
+            <version>4.6.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

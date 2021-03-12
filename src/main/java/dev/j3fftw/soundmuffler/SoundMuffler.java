@@ -2,6 +2,7 @@ package dev.j3fftw.soundmuffler;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+import java.io.File;
 import me.mrCookieSlime.Slimefun.Objects.Category;
 import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
 import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
@@ -9,8 +10,6 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
 
 public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
 
@@ -36,9 +35,9 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
         soundMufflerMachine.register(this);
 
         new Research(new NamespacedKey(this, "sound_muffler"),
-                     6912, "Sound Muffler", 11)
-        .addItems(soundMufflerMachine.getItem())
-        .register();
+            6912, "Sound Muffler", 11)
+            .addItems(soundMufflerMachine.getItem())
+            .register();
     }
 
 
