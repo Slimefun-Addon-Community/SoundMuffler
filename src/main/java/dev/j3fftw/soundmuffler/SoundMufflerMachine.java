@@ -25,17 +25,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class SoundMufflerMachine extends SlimefunItem implements EnergyNetComponent {
 
+    private static final String ITEM_NAME = "&3Sound Muffler";
+    private static final String ITEM_ID = "SOUND_MUFFLER";
+    
     public static final int DISTANCE = 8;
     private static final int[] border = {1, 2, 3, 4, 5, 6, 7};
-    private static final String name = "&3Sound Muffler";
-    private static final String id = "SOUND_MUFFLER";
 
     public SoundMufflerMachine() {
         super(SoundMuffler.SOUND_MUFFLER,
-            new SlimefunItemStack(id, Material.WHITE_CONCRETE, name,
+            new SlimefunItemStack(ITEM_ID, Material.WHITE_CONCRETE, ITEM_NAME,
                 "", "&7Muffles all sound in a", "&78 block radius", "", "&e\u26A1 Requires power to use"
             ),
-            id,
+            ITEM_ID,
             RecipeType.ENHANCED_CRAFTING_TABLE,
             new ItemStack[] {
                 new ItemStack(Material.WHITE_WOOL), SlimefunItems.STEEL_PLATE, new ItemStack(Material.WHITE_WOOL),
@@ -46,7 +47,7 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
         );
         addItemHandler(onPlace());
 
-        new BlockMenuPreset(id, name) {
+        new BlockMenuPreset(ITEM_ID, ITEM_NAME) {
 
             @Override
             public void init() {
@@ -118,12 +119,6 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
                 return new int[0];
             }
         };
-
-
-        registerBlockHandler(id, (p, b, item, reason) -> {
-            BlockStorage.clearBlockInfo(b);
-            return true;
-        });
     }
 
     protected void constructMenu(BlockMenuPreset preset) {
