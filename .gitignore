@@ -1,5 +1,14 @@
+/bin/
 /target/
 /out/
+/.settings/
 /.idea/
+/.vscode/
+
 *.iml
-/dependency-reduced-pom.xml
+
+dependency-reduced-pom.xml
+.classpath
+.factorypath
+.project
+.DS_Store
