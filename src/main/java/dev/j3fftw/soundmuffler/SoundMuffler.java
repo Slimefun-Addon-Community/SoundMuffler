@@ -1,11 +1,11 @@
 package dev.j3fftw.soundmuffler;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.core.researching.Research;
+import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.researches.Research;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
 import java.io.File;
-import me.mrCookieSlime.Slimefun.Objects.Category;
-import me.mrCookieSlime.Slimefun.cscorelib2.item.CustomItem;
-import me.mrCookieSlime.Slimefun.cscorelib2.updater.GitHubBuildsUpdater;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
 
-    public static Category SOUND_MUFFLER;
+    public static ItemGroup SOUND_MUFFLER;
 
     @Override
     public void onEnable() {
@@ -26,8 +26,8 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
             new GitHubBuildsUpdater(this, getFile(), "J3fftw1/SoundMuffler/master").start();
         }
 
-        SOUND_MUFFLER = new Category(new NamespacedKey(this, "sound_muffler"),
-            new CustomItem(Material.BEACON, "&7SoundMuffler", "", "&a> Click to open"));
+        SOUND_MUFFLER = new ItemGroup(new NamespacedKey(this, "sound_muffler"),
+            new CustomItemStack(Material.BEACON, "&7SoundMuffler", "", "&a> Click to open"));
 
         new SoundMufflerListener(this).start();
 
