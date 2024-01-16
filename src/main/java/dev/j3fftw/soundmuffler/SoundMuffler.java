@@ -4,12 +4,14 @@ import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
 import java.io.File;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import javax.annotation.Nonnull;
 
 public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
 
@@ -23,7 +25,7 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
         new Metrics(this, 7415);
 
         if (getConfig().getBoolean("options.auto-update") && getDescription().getVersion().startsWith("DEV - ")) {
-            new GitHubBuildsUpdater(this, getFile(), "J3fftw1/SoundMuffler/master").start();
+            new BlobBuildUpdater(this, getFile(), "SoundMuffler", "Dev").start();
         }
 
         SOUND_MUFFLER = new ItemGroup(new NamespacedKey(this, "sound_muffler"),
@@ -41,6 +43,7 @@ public class SoundMuffler extends JavaPlugin implements SlimefunAddon {
     }
 
 
+    @Nonnull
     @Override
     public JavaPlugin getJavaPlugin() {
         return this;

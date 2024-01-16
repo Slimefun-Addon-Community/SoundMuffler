@@ -23,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class SoundMufflerMachine extends SlimefunItem implements EnergyNetComponent {
 
     private static final String ITEM_NAME = "&3Sound Muffler";
@@ -55,7 +57,7 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
             }
 
             @Override
-            public void newInstance(final BlockMenu menu, final Block b) {
+            public void newInstance(@Nonnull final BlockMenu menu, @Nonnull final Block b) {
                 int volume = 10;
                 boolean enabled = false;
                 if (!BlockStorage.hasBlockInfo(b) || BlockStorage.getLocationInfo(b.getLocation(), "enabled") == null) {
@@ -68,7 +70,7 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
                 }
 
                 menu.replaceExistingItem(8, new CustomItemStack((enabled ? Material.REDSTONE : Material.GUNPOWDER),
-                    "&7Enabled: " + (enabled ? "&a\u2714" : "&4\u2718"), "", "&e> Click to enable this Machine"));
+                    "&7Enabled: " + (enabled ? "&a✔" : "&4✘"), "", "&e> Click to enable this Machine"));
                 menu.replaceExistingItem(0, new CustomItemStack(Material.PAPER,
                     "&eVolume: &b" + volume,
                     "&7Valid value range: 0-100",
@@ -139,6 +141,7 @@ public class SoundMufflerMachine extends SlimefunItem implements EnergyNetCompon
         };
     }
 
+    @Nonnull
     @Override
     public EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CONSUMER;

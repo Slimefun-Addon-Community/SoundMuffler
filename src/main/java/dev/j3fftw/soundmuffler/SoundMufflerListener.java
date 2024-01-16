@@ -16,6 +16,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
+import javax.annotation.Nonnull;
+
 public class SoundMufflerListener extends PacketAdapter implements Listener, EnergyNetComponent {
 
     public SoundMufflerListener(Plugin plugin) {
@@ -85,6 +87,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
         ProtocolLibrary.getProtocolManager().addPacketListener(this);
     }
 
+    @Nonnull
     @Override
     public EnergyNetComponentType getEnergyComponentType() {
         return EnergyNetComponentType.CONSUMER;
@@ -95,6 +98,7 @@ public class SoundMufflerListener extends PacketAdapter implements Listener, Ene
         return 352;
     }
 
+    @Nonnull
     @Override
     public String getId() {
         return "SOUND_MUFFLER";
